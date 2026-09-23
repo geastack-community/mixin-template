@@ -1,0 +1,48 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@geajs/core':
+        specifier: ^1.4.0
+        version: 1.4.0
+      '@geastack-community/utils':
+        specifier: ^0.0.4
+        version: 0.0.4(@geajs/core@1.4.0)
+
+packages:
+
+  '@geajs/core@1.4.0':
+    resolution: {integrity: sha512-91Oz41mmsq5u8tMlGqe3HS5DuzH5RR81ZvmCDLrP8wvsLsnE4ddUeNALjuV7rGimE7SOXNqnPdR886OgFo9cRg==}
+
+  '@geastack-community/utils@0.0.4':
+    resolution: {integrity: sha512-VnbW6wKW1/XjpOgMOJL9Vq86l+CM5nquZ75ZYOeJMgiB01c5nSSetKcsVwTQH2E2OXQloGkMRISSxflAVOx7Bg==}
+    peerDependencies:
+      '@geajs/core': ^1.4.0
+
+  '@types/react@19.3.0':
+    resolution: {integrity: sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg==}
+
+  csstype@3.2.3:
+    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
+
+snapshots:
+
+  '@geajs/core@1.4.0':
+    dependencies:
+      '@types/react': 19.3.0
+
+  '@geastack-community/utils@0.0.4(@geajs/core@1.4.0)':
+    dependencies:
+      '@geajs/core': 1.4.0
+
+  '@types/react@19.3.0':
+    dependencies:
+      csstype: 3.2.3
+
+  csstype@3.2.3: {}
