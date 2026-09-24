@@ -14,7 +14,6 @@
   },
   "files": [],
   "references": [
-    { "path": "./packages/foo" },
-    { "path": "./packages/bar" }
+    { "path": "./packages/foo" }
   ]
 }
