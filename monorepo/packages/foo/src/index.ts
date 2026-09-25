@@ -92,7 +92,12 @@ export function withFoo<
      * `implements Disposable` ensures that the disposal functionality is implemented.
      */
     const Derived =  class extends Base implements Disposable {
-        /** @internal */
+        /**
+         * @internal
+         * Here, we’ve used an array type on the assumption that multiple instances of a single class will be used; however,
+         * if you’re working with classes like `selectable`—which are designed to have only one instance created per class—set the type here to `GeaFoo | null` and set the initial value to `null`.
+         * Also, in the `dispose` method, assign `null` to the variable to dispose of it.
+         */
         [managedFoos]: GeaFoo[] = [];
 
         [creatorName](options?: GeaFooOptions): GeaFoo {
