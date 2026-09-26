@@ -1,0 +1,1 @@
+monorepo/packages/foo/src/index.ts
