@@ -2,5 +2,3 @@ packages:
   - 'packages/**'
 allowBuilds:
   esbuild: true
-minimumReleaseAgeExclude:
-  - '@geastack-community/utils@0.0.4'

@@ -1,5 +1,5 @@
 import { Store } from '@geajs/core';
-import { ComponentConstructor, Disposable, MixinConstructor } from '@geastack-community/utils';
+import { ComponentConstructor, CreatorName, Disposable, MixinConstructor } from '@geastack-community/utils';
 
 /**
  * Define options that can be passed to the mixin under the name `GeaXxxOptions`.
@@ -62,9 +62,14 @@ const creator = 'createFoo';
 /**
  * Define the `withXxx` interface, which is typically called by users.
  * Allow the creator's name to be changed, and finally, combine it with `Disposable` to add `dispose` to the type.
+ *
+ * Always wrap the key in `CreatorName<K, typeof creator>`.
+ * When the mixin is passed to `withMixins`, TypeScript widens `K` to `string`;
+ * `CreatorName` falls back to the default creator name in that case,
+ * so `this.createFoo()` keeps its precise type and completion.
  */
 export type WithFooMixin<K extends string = typeof creator> = {
-    [P in K]: (
+    [P in CreatorName<K, typeof creator>]: (
         options?: GeaFooOptions
     ) => GeaFoo;
 } & Disposable;
@@ -80,6 +85,13 @@ export const managedFoos = Symbol("managedFoos");
  * @param Base Pass the base class. For example, `Component`, `Store`, or `Object`. The class is selected based on the target to which the mixin is applied.
  * @param creatorName This is an optional argument. If there is a conflict in creator names when combining multiple mixins, you can pass a custom creator name to this argument to change the creator name and avoid the conflict.
  * These are Mixin functions that users typically call.
+ *
+ * Users can apply the mixin in either of these ways:
+ * ```ts
+ * class A extends withFoo(Component) {}
+ * class B extends withMixins(withFoo, withBar, Component) {}
+ * class C extends withMixins((Base) => withFoo(Base, 'createMyFoo'), Component) {}
+ * ```
  */
 export function withFoo<
     TBase extends ComponentConstructor,
@@ -114,5 +126,10 @@ export function withFoo<
         }
     };
 
-    return Derived as unknown as TBase & MixinConstructor<TBase, WithFooMixin<K>>;
+    /**
+     * Return only `MixinConstructor<TBase, ...>`.
+     * Do not intersect it with `TBase` (`TBase & MixinConstructor<...>`),
+     * otherwise `class X extends withFoo(...)` fails with TS2510.
+     */
+    return Derived as unknown as MixinConstructor<TBase, WithFooMixin<K>>;
 }
